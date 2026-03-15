@@ -1,13 +1,749 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Been • Places I've Traveled</title><meta name="description" content="An interactive map of places I've visited around the world"><link rel="stylesheet" href="/been/_astro/been.CV_VwLnZ.css"></head> <body> <div class="been-container"> <header class="been-header-bar"> <div class="been-header"> <div class="header-main"> <div> <h1>Been</h1> <p>Places I've traveled around the world</p> </div> <div class="visit-actions"> <div class="visit-counter" id="visit-counter" aria-live="polite">0/197 visited</div> <button class="visit-list" id="list-toggle" type="button" aria-label="Open list view"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path> </svg> <span id="list-toggle-label">List</span> </button> </div> </div> </div> </header> <div class="map-wrapper"> <div class="map-container" id="map-container"> <!-- SVG will be loaded here --> <div class="loading">Loading map...</div> </div> <div class="map-controls" aria-label="Map controls"> <button type="button" class="zoom-btn" id="zoom-reset" aria-label="Reset zoom" hidden>Reset</button> </div> <!-- Tooltip --> <div class="tooltip"> <div class="tooltip-country"></div> <div class="tooltip-status"></div> </div> </div> <div class="list-wrapper" id="list-wrapper" hidden> <div class="list-filters"> <input class="list-search" id="list-search" type="search" placeholder="Search countries"> <select class="list-select" id="filter-status"> <option value="all">All</option> <option value="visited">Visited</option> <option value="not-visited">Not visited</option> </select> <select class="list-select" id="filter-group"> <option value="continent">Group by continent</option> <option value="status">Group by been status</option> <option value="none">No grouping</option> </select> <select class="list-select" id="filter-continent"> <option value="all">All continents</option> </select> </div> <div class="list-content" id="list-content"></div> </div> </div> <!-- Modal --> <dialog> <div class="modal-header"> <div class="modal-title"> <span class="modal-flag"></span> <h2></h2> </div> <button class="modal-close" aria-label="Close">&times;</button> </div> <div class="modal-body"> <span class="modal-status"></span> <div class="visits-list"></div> </div> </dialog> <script>(function(){const visits = {"IN":{"visited":true},"AE":{"visited":true},"FR":{"visited":true},"EG":{"visited":true},"MY":{"visited":true},"GE":{"visited":true},"SG":{"visited":true},"AU":{"visited":true},"GR":{"visited":true},"CN":{"visited":true},"KW":{"visited":true},"TH":{"visited":true},"OM":{"visited":true},"US":{"visited":true},"QA":{"visited":true},"CA":{"visited":true},"BR":{"visited":true},"AR":{"visited":true},"LK":{"visited":true},"HK":{"visited":true},"MO":{"visited":true},"CH":{"visited":true},"ES":{"visited":true},"DE":{"visited":true},"CZ":{"visited":true},"GB":{"visited":true},"MT":{"visited":true},"HU":{"visited":true},"RS":{"visited":true},"LT":{"visited":true},"TR":{"visited":true},"NL":{"visited":true},"BE":{"visited":true},"AT":{"visited":true}};
-const beenScriptUrl = "/been/_astro/been.uH6E1bQx.js";
-const baseUrl = "/been/";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Been • Places I've Traveled</title>
+  <meta name="description" content="An interactive map of places I've visited around the world">
+  <link rel="stylesheet" href="/been/_astro/been.CV_VwLnZ.css">
+</head>
+<body>
+  <div class="been-container">
+    <header class="been-header-bar">
+      <div class="been-header">
+        <div class="header-main">
+          <div>
+            <h1>Been</h1>
+            <p>Places I've traveled around the world</p>
+          </div>
+          <div id="stats-bar" class="stats-bar"><!-- filled by JS --></div>
+          <div class="visit-actions">
+            <button class="visit-list" id="list-toggle" type="button" aria-label="Open list view">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+              </svg>
+              <span id="list-toggle-label">List</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="orientation-hint" role="status" aria-live="polite">
+      🗺️ Best viewed in landscape on mobile
+    </div>
+    <div class="map-wrapper">
+      <div class="map-container" id="map-container">
+        <div class="loading">Loading map...</div>
+      </div>
+      <div class="map-controls" aria-label="Map controls">
+        <button type="button" class="zoom-btn" id="zoom-reset" aria-label="Reset zoom" hidden>Reset</button>
+      </div>
+      <div class="tooltip">
+        <div class="tooltip-country"></div>
+        <div class="tooltip-status"></div>
+      </div>
+    </div>
+    <div class="list-wrapper" id="list-wrapper" hidden>
+      <div class="list-filters">
+        <input class="list-search" id="list-search" type="search" placeholder="Search countries">
+        <select class="list-select" id="filter-status">
+          <option value="all">All</option>
+          <option value="visited">Visited</option>
+          <option value="not-visited">Yet to visit</option>
+        </select>
+        <select class="list-select" id="filter-group">
+          <option value="continent">Group by continent</option>
+          <option value="status">Group by been status</option>
+          <option value="none">No grouping</option>
+        </select>
+        <select class="list-select" id="filter-continent">
+          <option value="all">All continents</option>
+        </select>
+        <select class="list-select" id="filter-sort">
+          <option value="alpha">Sort: A → Z</option>
+          <option value="visited-first">Sort: Visited first</option>
+          <option value="unvisited-first">Sort: Yet to visit first</option>
+        </select>
+      </div>
+      <div class="list-content" id="list-content"></div>
+    </div>
+  </div>
+  <dialog>
+    <div class="modal-header">
+      <div class="modal-title">
+        <span class="modal-flag"></span>
+        <h2></h2>
+      </div>
+      <button class="modal-close" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="visits-list"></div>
+    </div>
+  </dialog>
+  <style>
+    /* ── Dialog open/close ───────────────────────────────────────────────── */
+    dialog { display: none; }
+    dialog[open], dialog.dialog-open-fallback { display: block; }
 
-    window.__BEEN_VISITS__ = { ...visits };
+    /* ── Modal override — expanded max-width + scrollable body ───────────── */
+    dialog {
+      max-width: 560px;
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────────── */
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.4rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+      border-bottom: 1px solid var(--border);
+      gap: 0.75rem;
+    }
+
+    .modal-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+
+    .modal-flag {
+      font-size: 1.9rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .modal-title h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .modal-territory-note {
+      flex-basis: 100%;
+      margin-left: 2.5rem;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.03em;
+      margin-top: 0.15rem;
+      text-transform: uppercase;
+    }
+
+    .modal-close {
+      background: #ffffff12;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 8px;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .modal-close:hover {
+      background: #ffffff22;
+      color: var(--text-primary);
+    }
+
+    /* ── Body ────────────────────────────────────────────────────────────── */
+    .modal-body {
+      padding: 0;
+      max-height: 72vh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .visits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Stats bar ───────────────────────────────────────────────────────── */
+    .modal-stats {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: #111;
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 1.4rem;
+    }
+
+    .modal-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .modal-stat-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+
+    .modal-stat-latest {
+      color: var(--country-visited);
+    }
+
+    .modal-stat-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-secondary);
+    }
+
+    .modal-stat-divider {
+      width: 1px;
+      height: 2rem;
+      background: var(--border);
+      margin: 0 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Generic section ─────────────────────────────────────────────────── */
+    .modal-section {
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-section:last-child { border-bottom: none; }
+
+    .modal-section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .modal-section-icon {
+      font-size: 0.9rem;
+    }
+
+    /* ── Highlights ──────────────────────────────────────────────────────── */
+    .modal-highlights {
+      background: linear-gradient(135deg, #1c160a 0%, #120f05 100%);
+      border-top: 1px solid #f59e0b33;
+      border-bottom: 1px solid #f59e0b33;
+    }
+
+    .modal-highlights .modal-section-title {
+      color: #f59e0b;
+    }
+
+    .modal-highlights-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .modal-highlights-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #f4e8c1;
+      line-height: 1.35;
+    }
+
+    .modal-highlights-list li::before {
+      content: '◆';
+      font-size: 0.45rem;
+      color: #f59e0b;
+      flex-shrink: 0;
+      position: relative;
+      top: -0.1em;
+    }
+
+    /* ── Visits timeline ─────────────────────────────────────────────────── */
+    .modal-trips {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .modal-trip {
+      background: #ffffff06;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      transition: border-color 0.15s;
+    }
+
+    .modal-trip--latest {
+      border-color: #f59e0b55;
+      background: #f59e0b0a;
+    }
+
+    .modal-trip-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-trip-time {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .modal-trip-reason {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .modal-trip-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--country-visited);
+      border: 1px solid #f59e0b55;
+      border-radius: 999px;
+      padding: 0.12rem 0.45rem;
+      background: #f59e0b15;
+      margin-left: auto;
+    }
+
+    /* ── Notes ───────────────────────────────────────────────────────────── */
+    .modal-notes-section {
+      background: #0d0d0d;
+    }
+
+    .modal-notes {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px dashed #ffffff22;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .modal-note {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      align-items: start;
+    }
+
+    .modal-note + .modal-note {
+      border-top: 1px dashed #ffffff14;
+    }
+
+    .modal-note-time {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      padding-top: 0.15rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .modal-note-text {
+      font-size: 0.87rem;
+      color: #d1d5db;
+      line-height: 1.5;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    /* ── Yet to visit empty state ────────────────────────────────────────── */
+    .modal-no-visits {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 2.5rem 1.5rem;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .modal-no-visits-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+      opacity: 0.5;
+    }
+
+    .modal-no-visits p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-map-actions {
+      padding-top: 0.8rem;
+    }
+
+    .modal-show-map {
+      width: 100%;
+      border: 1px solid #f59e0b55;
+      background: #f59e0b15;
+      color: var(--country-visited);
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .modal-show-map:hover {
+      background: #f59e0b24;
+      border-color: #f59e0b88;
+    }
+
+    @media (max-width: 768px) {
+      dialog { max-width: 95vw; border-radius: 14px; }
+      .modal-header { padding: 1rem; }
+      .modal-section { padding: 0.9rem 1rem; }
+      .modal-stats { padding: 0.75rem 1rem; }
+      .modal-note { grid-template-columns: 1fr; gap: 0.25rem; }
+      .modal-note-time { padding-top: 0; }
+    }
+
+    /* ── Stats bar ───────────────────────────────────────────────────────── */
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.4rem 0.9rem;
+      background: #ffffff06;
+    }
+
+    .stat-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.05rem;
+      min-width: 4rem;
+      text-align: center;
+    }
+
+    .stat-chip-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--country-visited);
+      line-height: 1.1;
+    }
+
+    .stat-chip-denom {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .stat-chip-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+    }
+
+    .stat-chip-divider {
+      width: 1px;
+      height: 1.75rem;
+      background: var(--border);
+      margin: 0 0.65rem;
+      flex-shrink: 0;
+    }
+
+    /* ── List items — flag + year badge ─────────────────────────────────── */
+    .list-item {
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.12s;
+    }
+
+    .list-item:hover {
+      background: #ffffff0a;
+    }
+
+    body.list-view .list-grid {
+      display: block;
+      column-width: 220px;
+      column-gap: 1.25rem;
+      column-rule: 1px solid var(--border);
+    }
+
+    body.list-view .list-item {
+      break-inside: avoid;
+      margin-bottom: 0.2rem;
+      padding-right: 0.35rem;
+    }
+
+    .flag-emoji {
+      font-size: 1rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .country-name {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .visit-year-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--country-visited);
+      background: #f59e0b18;
+      border: 1px solid #f59e0b33;
+      border-radius: 999px;
+      padding: 0.05rem 0.35rem;
+      flex-shrink: 0;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Continent group headings with progress bars ─────────────────────── */
+    .group-heading-wrap {
+      margin-bottom: 0.75rem;
+    }
+
+    .group-heading-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .group-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .group-count {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .progress-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--country-visited);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+      min-width: 2px;
+    }
+
+    /* ── Header spacing refinements ─────────────────────────────────────── */
+    .been-header-bar {
+      padding: 1rem 0 1.25rem;
+    }
+
+    .been-header p {
+      margin-bottom: 0.4rem;
+    }
+
+    .orientation-hint {
+      display: none;
+      margin: 0.5rem auto 0;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid #f59e0b55;
+      background: #f59e0b15;
+      color: #fbbf24;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* ── Prevent scroll at default map view ─────────────────────────────── */
+    body:not(.list-view) {
+      overflow: hidden;
+    }
+
+    body:not(.list-view) .been-container {
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    body:not(.list-view) .map-wrapper {
+      flex: 1;
+      min-height: 0;
+      padding-top: 1rem;
+      overflow: hidden;
+      width: 100%;
+      margin-left: 0;
+    }
+
+    body:not(.list-view) .map-container {
+      min-height: 0;
+      height: 100%;
+    }
+
+    body:not(.list-view) .map-container,
+    body:not(.list-view) .map-container svg {
+      touch-action: none;
+    }
+
+    .visit-list,
+    .zoom-btn,
+    .list-select,
+    .list-search,
+    .modal-close,
+    .modal-show-map {
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+
+    /* ── Override list-filters grid for 5 columns ────────────────────────── */
+    .list-filters {
+      grid-template-columns: minmax(200px, 1fr) repeat(4, minmax(130px, 190px));
+    }
+
+    /* ── Map highlight pulse animation ───────────────────────────────────── */
+    @keyframes highlight-pulse {
+      0%   { fill: var(--country-hover); }
+      40%  { fill: #fff8e1; }
+      70%  { fill: var(--country-hover); }
+      100% { fill: var(--country-visited); }
+    }
+
+    .highlight-pulse {
+      animation: highlight-pulse 1.4s ease-out forwards;
+    }
+
+    @media (max-width: 768px) {
+      .stats-bar { display: none; }
+      .list-filters { grid-template-columns: 1fr; }
+
+      body:not(.list-view) .orientation-hint {
+        display: block;
+      }
+
+      body:not(.list-view) .map-wrapper {
+        padding-top: 0.5rem;
+      }
+
+      body:not(.list-view) .map-controls {
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+
+      dialog {
+        width: 100vw;
+        max-width: 100vw;
+        max-height: 88dvh;
+        border-radius: 14px 14px 0 0;
+        margin: 0;
+        inset: auto 0 0 0;
+      }
+
+      .modal-body {
+        max-height: calc(88dvh - 74px);
+      }
+
+      body.list-view .list-grid {
+        column-width: auto;
+        column-count: 1;
+        column-rule: none;
+      }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      body:not(.list-view) .orientation-hint {
+        display: none;
+      }
+
+      .been-header-bar {
+        padding: 0.55rem 0 0.65rem;
+      }
+
+      .been-header h1 {
+        font-size: 1.9rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .been-header p {
+        margin-bottom: 0.1rem;
+      }
+
+      body:not(.list-view) .map-wrapper {
+        padding-top: 0.2rem;
+      }
+
+      body:not(.list-view) .map-controls {
+        top: 0.25rem;
+        right: 0.35rem;
+      }
+    }
+  </style>
+  <script>
+    (function(){
+const beenScriptUrl = "/been/_astro/been.uH6E1bQx.js?v=20260315-3";
+const baseUrl = "/been/";
+const dataVersion = "20260315-3";
+
     window.__BEEN_BASE_URL__ = baseUrl;
+  window.__BEEN_DATA_VERSION__ = dataVersion;
 
     // Load SVG map
     // Note: In production, you'll need an actual world map SVG with data-iso attributes
     // For now, we'll create a placeholder that shows the structure
+    const ensureBeenScriptLoaded = () => {
+      const existingScript = Array.from(document.querySelectorAll('script[type="module"]'))
+        .find((scriptEl) => scriptEl.src.includes('/been/_astro/been.uH6E1bQx.js'));
+
+      if (existingScript) {
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = beenScriptUrl;
+      script.type = 'module';
+      script.dataset.beenModule = 'true';
+      document.body.appendChild(script);
+    };
+
     const loadMap = async () => {
       const container = document.getElementById('map-container');
       
@@ -21,15 +757,12 @@ const baseUrl = "/been/";
           container.innerHTML = createDemoSVG();
         }
         
-        // Initialize the interactive map after SVG is loaded
-        const script = document.createElement('script');
-        script.src = beenScriptUrl;
-        script.type = 'module';
-        document.body.appendChild(script);
-        
       } catch (error) {
         console.error('Failed to load map:', error);
         container.innerHTML = createDemoSVG();
+      } finally {
+        // Initialize the interactive map after SVG (or fallback) is loaded
+        ensureBeenScriptLoaded();
       }
     };
 

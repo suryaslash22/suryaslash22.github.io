@@ -1,0 +1,376 @@
+{
+  "IN": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "1996",
+        "reason": "Birthplace",
+        "highlights": [],
+        "notes": "Born in India."
+      }
+    ]
+  },
+  "AE": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "1997",
+        "reason": "Childhood home",
+        "highlights": [],
+        "notes": "Grew up in the UAE during childhood."
+      }
+    ]
+  },
+  "FR": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2005",
+        "reason": "World Youth Chess Championship",
+        "highlights": [],
+        "notes": "Visited France for the World Youth Chess Championship."
+      }
+    ]
+  },
+  "EG": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2004",
+        "reason": "Tourism with family",
+        "highlights": [],
+        "notes": "Tourism trip in Egypt with family."
+      }
+    ]
+  },
+  "MY": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2006",
+        "reason": "UCMAS international tournament",
+        "highlights": [],
+        "notes": "Visited Malaysia for UCMAS international tournament."
+      }
+    ]
+  },
+  "GE": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2007",
+        "reason": "World Youth Chess",
+        "highlights": [],
+        "notes": "Visited Georgia for World Youth Chess."
+      }
+    ]
+  },
+  "SG": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2008",
+        "reason": "Tourism with family",
+        "highlights": [],
+        "notes": "Family tourism trip to Singapore."
+      }
+    ]
+  },
+  "AU": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2008",
+        "reason": "Tourism with family",
+        "highlights": [],
+        "notes": "Family tourism trip to Australia."
+      }
+    ]
+  },
+  "GR": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2009",
+        "reason": "World Schools' Chess",
+        "highlights": [],
+        "notes": "Visited Greece for World Schools' Chess."
+      }
+    ]
+  },
+  "CN": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2010",
+        "reason": "Harvard MUN",
+        "highlights": [],
+        "notes": "Visited China for Harvard MUN."
+      }
+    ]
+  },
+  "KW": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2011",
+        "reason": "Visiting appa",
+        "highlights": [],
+        "notes": "Visited appa in Kuwait."
+      }
+    ]
+  },
+  "TH": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2012",
+        "reason": "Scholar's Cup",
+        "highlights": [],
+        "notes": "Visited Thailand for Scholar's Cup."
+      }
+    ]
+  },
+  "OM": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2021",
+        "reason": "Visiting appa amma in Muscat",
+        "highlights": [],
+        "notes": "Visited appa and amma in Muscat, Oman."
+      }
+    ]
+  },
+  "US": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2014",
+        "reason": "Bachelor's at NYU",
+        "highlights": [],
+        "notes": "Moved to the United States for my bachelor's at NYU."
+      }
+    ]
+  },
+  "QA": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2016",
+        "reason": "Long layover / mini-tourism",
+        "highlights": [],
+        "notes": "Long layover in Qatar with a mini-tourism stop."
+      }
+    ]
+  },
+  "CA": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2016",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Canada."
+      }
+    ]
+  },
+  "BR": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2017",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Brazil."
+      }
+    ]
+  },
+  "AR": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2018",
+        "reason": "Study abroad in Buenos Aires",
+        "highlights": [],
+        "notes": "Study abroad period in Buenos Aires, Argentina."
+      }
+    ]
+  },
+  "LK": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2019",
+        "reason": "Long layover / mini-tourism",
+        "highlights": [],
+        "notes": "Long layover in Sri Lanka with a mini-tourism stop."
+      }
+    ]
+  },
+  "HK": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2019",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism visit to Hong Kong."
+      }
+    ]
+  },
+  "MO": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2019",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism visit to Macau."
+      }
+    ]
+  },
+  "CH": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2020",
+        "reason": "Completing bachelor's",
+        "highlights": [],
+        "notes": "Visited Switzerland while completing my bachelor's."
+      }
+    ]
+  },
+  "ES": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2021",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Spain."
+      }
+    ]
+  },
+  "DE": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2022",
+        "reason": "Master's",
+        "highlights": [],
+        "notes": "Moved to Germany for my master's."
+      }
+    ]
+  },
+  "CZ": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2023",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Czechia."
+      }
+    ]
+  },
+  "GB": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2024",
+        "reason": "NS wedding",
+        "highlights": [],
+        "notes": "Visited the UK for NS wedding."
+      }
+    ]
+  },
+  "MT": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2025",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Malta."
+      }
+    ]
+  },
+  "HU": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2025",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Hungary."
+      }
+    ]
+  },
+  "RS": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2024",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Serbia."
+      }
+    ]
+  },
+  "LT": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2025",
+        "reason": "Work trip",
+        "highlights": [],
+        "notes": "Visited Lithuania on a work trip."
+      }
+    ]
+  },
+  "TR": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2020",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Turkey."
+      }
+    ]
+  },
+  "NL": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2025",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in the Netherlands."
+      }
+    ]
+  },
+  "BE": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2025",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Belgium."
+      }
+    ]
+  },
+  "AT": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2025",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Austria."
+      }
+    ]
+  }
+}
