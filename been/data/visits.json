@@ -372,5 +372,38 @@
         "notes": "Tourism trip in Austria."
       }
     ]
+  },
+  "BG": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2026",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Bulgaria."
+      }
+    ]
+  },
+  "RO": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2026",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Romania."
+      }
+    ]
+  },
+  "DK": {
+    "visited": true,
+    "visits": [
+      {
+        "time": "2026",
+        "reason": "Tourism",
+        "highlights": [],
+        "notes": "Tourism trip in Denmark."
+      }
+    ]
   }
 }
