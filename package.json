@@ -1,0 +1,27 @@
+{
+  "name": "suryaslash22-github-io",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "postbuild": "node scripts/stage-static.mjs"
+  },
+  "dependencies": {
+    "geist": "^1.7.2",
+    "lucide-react": "^1.22.0",
+    "next": "^15.1.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "@types/react": "^19.2.17",
+    "autoprefixer": "^10.5.2",
+    "postcss": "^8.5.16",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^6.0.3"
+  }
+}
